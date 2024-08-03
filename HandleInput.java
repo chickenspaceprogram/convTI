@@ -3,14 +3,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class HandleInput {
-    final HashSet<String> ALL_OPTIONS = new HashSet<>(Arrays.asList("-h", "--help", "-v", "--version", "-f", "--format")); // there is probably a better way to do this
-    final HashSet<String> FORMATS = new HashSet<>(Arrays.asList("rlist", "clist", "matrix", "string"));
-    String formatAs;
+    private final HashSet<String> ALL_OPTIONS = new HashSet<>(Arrays.asList("-h", "--help", "-v", "--version", "-f", "--format")); // there is probably a better way to do this
+    private final HashSet<String> FORMATS = new HashSet<>(Arrays.asList("rlist", "clist", "matrix", "string"));
+    private String formatAs;
 
-    public HandleInput(String[] arguments) {
-        if (arguments.length <= 2) {
-            printHelp();
-        }
+    public void getInput(String[] arguments) throws IOException {
         validateOptions(arguments);
 
         for (int i = 0; i < arguments.length; ++i) {
@@ -23,13 +20,13 @@ public class HandleInput {
     
     private void printHelp() {
         System.out.println("usage: convti [<options>] <source> <filename>\n");
-        System.out.println("<source>\tname of source file to compile");
-        System.out.println("<filename>\tdesired filename on calculator");
-        System.out.println("options:");
-        System.out.println("-h, --help\tprints this message and quits");
-        System.out.println("-v. --version\tprints version and quits");
+        System.out.println("<source>\t\tname of source file to compile");
+        System.out.println("<filename>\t\tdesired filename on calculator");
+        System.out.println("\noptions:");
+        System.out.println("-h, --help\t\tprints this message and quits");
+        System.out.println("-v. --version\t\tprints version and quits");
         System.out.println("-f, --format [format]\tspecifies file format (if not provided, this will be inferred using filename and contents)");
-        System.out.println("\t\tValid formats\nrlist\treal list\nclist\tcomplex lsit\nmatrix\tmatrix\nstring\tstring"); // make this less dumb
+        System.out.println("\nValid formats:\nrlist\t\t\treal list\nclist\t\t\tcomplex lsit\nmatrix\t\t\tmatrix\nstring\t\t\tstring"); // yes this is kinda a dumb way to do this
         System.exit(0);
     }
 
@@ -38,26 +35,25 @@ public class HandleInput {
         System.exit(0);
     }
 
-    private void validateOptions(String[] arguments) {
+    private void validateOptions(String[] arguments) throws IOException {
         HashSet<String> optionsFound = new HashSet<>();
-        try {
-            for (String arg : arguments) {
-                switch (arg) {
-                    case "-h", "--help" -> printHelp();
-                    case "-v", "--version" -> printVersion();
-                }
-                if (optionsFound.contains(arg)) {
-                    throw new IOException("Optional argument was listed twice.");
-                }
-                if (arg.contains("-") && !ALL_OPTIONS.contains(arg)) {
-                    throw new IOException("Invalid optional argument given.");
-                }
-                if (arg.contains("-")) {
-                    optionsFound.add(arg);
-                }
+        for (String arg : arguments) {
+            switch (arg) {
+                case "-h", "--help" -> printHelp();
+                case "-v", "--version" -> printVersion();
             }
-        } catch (IOException e) {
-            System.err.println("IOException: " + e.getMessage());
+            if (optionsFound.contains(arg)) {
+                throw new IOException("convti: optional argument was listed twice.");
+            }
+            if (arg.contains("-") && !ALL_OPTIONS.contains(arg)) {
+                throw new IOException("convti: invalid optional argument given; enter `convti --help` to see a list of valid arguments.");
+            }
+            if (arg.contains("-")) {
+                optionsFound.add(arg);
+            }
+        }
+        if (arguments.length < 2) {
+            throw new IOException("convti: not enough arguments given; try --help if you need it");
         }
     }
 }
