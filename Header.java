@@ -10,13 +10,11 @@ public class Header {
     byte[] eightSigBytes = eightSig.getBytes(StandardCharsets.US_ASCII);
     byte[] commentBytes = comment.getBytes(StandardCharsets.US_ASCII);
 
-    public byte[] makeArray(Word dataLength) {
+    public Header(Word dataLength) {
         System.arraycopy(this.eightSigBytes, 0, this.headerArray, 0, 8);
         System.arraycopy(this.threeSig, 0, this.headerArray, 8, 3);
         System.arraycopy(this.commentBytes, 0, this.headerArray, 11, 42);
         this.headerArray[53] = dataLength.LSB;
         this.headerArray[54] = dataLength.MSB;
-
-        return this.headerArray;
     }
 }
