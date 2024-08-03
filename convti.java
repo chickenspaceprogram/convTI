@@ -1,6 +1,6 @@
 public class convti {
     public static void main(String[] args) {
-        Input config = new Input(args);
+        HandleInput config = new HandleInput(args);
         System.out.println(config);
     }
 }
