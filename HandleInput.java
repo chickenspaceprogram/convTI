@@ -2,19 +2,19 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class Input {
-    final HashSet<String> allOptions = new HashSet<>(Arrays.asList("-h", "--help", "-v", "--version", "-f", "--format")); // there is probably a better way to do this
-    final HashSet<String> formats = new Hashset<>(Arrays.asList(""));
+public class HandleInput {
+    final HashSet<String> ALL_OPTIONS = new HashSet<>(Arrays.asList("-h", "--help", "-v", "--version", "-f", "--format")); // there is probably a better way to do this
+    final HashSet<String> FORMATS = new HashSet<>(Arrays.asList("rlist", "clist", "matrix", "string"));
     String formatAs;
 
-    public Input(String[] arguments) {
+    public HandleInput(String[] arguments) {
         if (arguments.length <= 2) {
             printHelp();
         }
         validateOptions(arguments);
 
         for (int i = 0; i < arguments.length; ++i) {
-            if (allOptions.contains(arguments[i])) {
+            if (ALL_OPTIONS.contains(arguments[i])) {
                 ++i;
                 formatAs = arguments[i];
             }
@@ -22,14 +22,14 @@ public class Input {
     }
     
     private void printHelp() {
-        System.out.println("usage: convti [<options>] <source> <filename>");
+        System.out.println("usage: convti [<options>] <source> <filename>\n");
         System.out.println("<source>\tname of source file to compile");
         System.out.println("<filename>\tdesired filename on calculator");
         System.out.println("options:");
-        System.out.println("-h, --help\tprints this message");
-        System.out.println("-v. --version\tprints version");
-        System.out.println("-f, --format\tspecifies file format (if not provided, this will be inferred using filename and contents)");
-        System.out.println("\t\tValid formats\nreal\treal number\ncplx\ncomplex number\nlistreal\nreal list\nlistcplx\ncomplex lsit\nmatrix\nmatrix\nstring\nstring");
+        System.out.println("-h, --help\tprints this message and quits");
+        System.out.println("-v. --version\tprints version and quits");
+        System.out.println("-f, --format [format]\tspecifies file format (if not provided, this will be inferred using filename and contents)");
+        System.out.println("\t\tValid formats\nrlist\treal list\nclist\tcomplex lsit\nmatrix\tmatrix\nstring\tstring"); // make this less dumb
         System.exit(0);
     }
 
@@ -49,7 +49,7 @@ public class Input {
                 if (optionsFound.contains(arg)) {
                     throw new IOException("Optional argument was listed twice.");
                 }
-                if (arg.contains("-") && !allOptions.contains(arg)) {
+                if (arg.contains("-") && !ALL_OPTIONS.contains(arg)) {
                     throw new IOException("Invalid optional argument given.");
                 }
                 if (arg.contains("-")) {
