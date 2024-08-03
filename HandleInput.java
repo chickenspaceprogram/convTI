@@ -1,20 +1,43 @@
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 
 public class HandleInput {
-    private final HashSet<String> ALL_OPTIONS = new HashSet<>(Arrays.asList("-h", "--help", "-v", "--version", "-f", "--format")); // there is probably a better way to do this
+    private final Map<String, String> OPTIONS_SHORT = Map.of(
+        "-f", "--format",
+        "-v", "--version",
+        "-h", "--help"
+    );
+    private final Map<String, String> OPTIONS_LONG = Map.of(
+        "--format", "-f",
+        "--version", "-v",
+        "--help", "-h"
+    );
     private final HashSet<String> FORMATS = new HashSet<>(Arrays.asList("rlist", "clist", "matrix", "string"));
-    private String formatAs;
+    public String formatAs;
+    public String inputFilename;
+    public String outputFilename;
+    private int numFileArgs = 0;
 
     public void getInput(String[] arguments) throws IOException {
         validateOptions(arguments);
 
         for (int i = 0; i < arguments.length; ++i) {
-            if (ALL_OPTIONS.contains(arguments[i])) {
-                ++i;
-                formatAs = arguments[i];
+            if (OPTIONS_SHORT.containsKey(arguments[i]) || OPTIONS_LONG.containsKey(arguments[i])) {
+                switch (arguments[i]) {
+                    case "-f", "--format" -> {
+                        ++i;
+                        catchFormatError(arguments, i);
+                        this.formatAs = arguments[i];
+                    }
+                }
+            } else {
+                saveFilename(arguments[i]);
             }
+        }
+        if (this.numFileArgs < 2) {
+            throw new IOException("convti: not enough arguments given; try --help if you need it");
         }
     }
     
@@ -26,7 +49,7 @@ public class HandleInput {
         System.out.println("-h, --help\t\tprints this message and quits");
         System.out.println("-v. --version\t\tprints version and quits");
         System.out.println("-f, --format [format]\tspecifies file format (if not provided, this will be inferred using filename and contents)");
-        System.out.println("\nValid formats:\nrlist\t\t\treal list\nclist\t\t\tcomplex lsit\nmatrix\t\t\tmatrix\nstring\t\t\tstring"); // yes this is kinda a dumb way to do this
+        System.out.println("\nValid formats:\nrlist\t\t\treal list\nclist\t\t\tcomplex list\nmatrix\t\t\tmatrix\nstring\t\t\tstring"); // yes this is kinda a dumb way to do this
         System.exit(0);
     }
 
@@ -45,15 +68,46 @@ public class HandleInput {
             if (optionsFound.contains(arg)) {
                 throw new IOException("convti: optional argument was listed twice.");
             }
-            if (arg.contains("-") && !ALL_OPTIONS.contains(arg)) {
+            boolean isInvalidOption = arg.contains("-") && !OPTIONS_SHORT.containsKey(arg) && !OPTIONS_LONG.containsKey(arg);
+            if (isInvalidOption) {
                 throw new IOException("convti: invalid optional argument given; enter `convti --help` to see a list of valid arguments.");
             }
             if (arg.contains("-")) {
                 optionsFound.add(arg);
+                if (arg.contains("--")) {
+                    optionsFound.add(OPTIONS_LONG.get(arg));
+                } else {
+                    optionsFound.add(OPTIONS_SHORT.get(arg));
+                }
             }
         }
         if (arguments.length < 2) {
             throw new IOException("convti: not enough arguments given; try --help if you need it");
+        }
+    }
+
+    private void saveFilename(String filename) throws IOException {
+        switch (this.numFileArgs) {
+            case 0 -> {
+                ++this.numFileArgs;
+                this.inputFilename = filename;
+            }
+            case 1 -> {
+                ++this.numFileArgs;
+                this.outputFilename = filename;
+            }
+            default -> {
+                throw new IOException("convti: too many files given");
+            }
+        }
+    }
+
+    private void catchFormatError(String[] allArguments, int position) throws IOException {
+        if (position >= allArguments.length) {
+            throw new IOException("convti: format specified, but no format given. "); // `no format given` is only thrown as an error when at the end, since `invalid format` will be thrown if at the beginning.
+        }
+        if (!FORMATS.contains(allArguments[position])) {
+            throw new IOException(String.format("convti: invalid format `%s` given. Did you forget to enter a format?", allArguments[position]));
         }
     }
 }
