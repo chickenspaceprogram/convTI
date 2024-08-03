@@ -2,14 +2,16 @@ import java.io.IOException;
 
 public class convti {
     public static void main(String[] args) {
-        HandleInput config = new HandleInput();
+        Input config = new HandleInput();
         try {
             config.getInput(args);
         } catch (IOException error) {
             System.err.println(error.getMessage());
             System.exit(-1);
         }
-        System.out.println("program proceeded");
+        System.out.println(config.getFormat());
+        System.out.println(config.getInputFilename());
+        System.out.println(config.getOutputFilename());
         
     }
 }
