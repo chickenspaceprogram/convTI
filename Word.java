@@ -1,9 +1,22 @@
 public class Word {
-    public byte MSB;
-    public byte LSB;
+    private byte MSB;
+    private byte LSB;
 
     public Word(short value) {
-        this.LSB = (byte) (value & 0x00FF); // LSB
-        this.MSB = (byte) ((value & 0xFF00) >> 8); // MSB
+        LSB = (byte) (value & 0x00FF); // LSB
+        MSB = (byte) ((value & 0xFF00) >> 8); // MSB
+    }
+
+    public void setWord(short value) {
+        LSB = (byte) (value & 0x00FF);
+        MSB = (byte) ((value & 0xFF00) >> 8);
+    }
+
+    public byte getLSB() {
+        return LSB;
+    }
+
+    public byte getMSB() {
+        return MSB;
     }
 }

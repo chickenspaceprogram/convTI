@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class convti {
     public static void main(String[] args) {
-        Input config = new HandleInput();
+        Input config = new Input();
         try {
             config.getInput(args);
         } catch (IOException error) {
