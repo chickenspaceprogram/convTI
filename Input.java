@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class Input {
-
+    // two maps are here since we want to ensure that if -f is entered that the user can't also enter --format and specify two different formats.
     private final Map<String, String> OPTIONS_SHORT = Map.of(
         "-f", "--format",
         "-v", "--version",
@@ -82,7 +82,6 @@ public class Input {
             }
             case 1 -> {
                 ++this.numFileArgs;
-                this.outputFilename = filename;
             }
             default -> {
                 throw new IOException("convti: too many files given");
