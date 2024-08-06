@@ -16,7 +16,15 @@ public class Word {
         return LSB;
     }
 
+    public void setLSB(byte value) {
+        LSB = value;
+    }
+
     public byte getMSB() {
         return MSB;
+    }
+
+    public void setMSB(byte value) {
+        MSB = value;
     }
 }
