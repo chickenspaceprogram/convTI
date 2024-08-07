@@ -13,14 +13,18 @@ Java Development Kit (JDK)
 This application is still incomplete, as is its documentation.
 Please raise an issue on GitHub if you encounter any issues or bugs! 
 Also, feel free to suggest features/additions.
+
+If you want an *actually good* version of this, check out SourceCoder 3!
+This project is more for fun and teaching myself Java than for practical use, if I'm honest.
 --------
 Creator:
 
 Athena Boose (chickenspaceprogram)
 --------
 Acknowledgements:
-merthsoft, "Link Protocol Guide v1.4".
+merthsoft, "Link Protocol Guide v1.4"
     - https://merthsoft.com/linkguide/
-    - single-handedly made this project possible
+    - made this project possible, as I'm not willing to spend the long time it would probably take to reverse-engineer TI's file format
 KermMartian, "SourceCoder 3"
     - https://sc.cemetech.net
+    - inspired this project

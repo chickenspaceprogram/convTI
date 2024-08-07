@@ -79,7 +79,7 @@ public class DataHeader {
 
     private void setVarName(String name, String type) throws IllegalArgumentException{
         name = name.toUpperCase();
-        if (!name.matches("yeet")) {// still gotta figure out regex. also include [] for matrices
+        if (!name.matches("^[A-Z0-9\\[\\]]*$")) {
             throw new IllegalArgumentException("Invalid variable name, name contained illegal (nonalphanumeric) characters.");
         }
         if (!Character.isLetter(name.charAt(0)) && !type.equals("matrix")) {
