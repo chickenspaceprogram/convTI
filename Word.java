@@ -7,6 +7,11 @@ public class Word {
         MSB = (byte) ((value & 0xFF00) >> 8); // MSB
     }
 
+    public Word() {
+        LSB = 0x00;
+        MSB = 0x00;
+    }
+
     public void setWord(short value) {
         LSB = (byte) (value & 0x00FF);
         MSB = (byte) ((value & 0xFF00) >> 8);
