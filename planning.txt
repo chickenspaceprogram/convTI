@@ -3,14 +3,18 @@ convTI development planning/ideas
 This is as much for me to plan this project out as anything, feel free to ignore it. 
 Plans will change, nothing in here is a "promised feature" or anything.
 
-v0.1.0 (current)
+Past versions: 
+
+v0.1.0
     - First version of Data & File headers mostly complete (needs future bugtesting and possible refactor)
 
 v0.2.0-0
     - Format should no longer be an optional argument, force user to specify it
+v0.2.0-0.1 (current)
     - Add support for arbitrary --flags, necessary in future for things like --justtext and --decompile
-        - maybe use hashmap to map --flag -> "Help message"?
+    - make sure --flags are properly unit tested!
 
+Future versions:
 v0.2.0-1
     - Add support for creating file headers of all the following types:
         - rnum - Real Number
