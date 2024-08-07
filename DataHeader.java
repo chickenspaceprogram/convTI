@@ -40,11 +40,7 @@ public class DataHeader {
         "L3", (short) 0x025d,
         "L4", (short) 0x035d,
         "L5", (short) 0x045d,
-        "L6", (short) 0x055d,
-        "L7", (short) 0x065d,   // yes, `L7`-`L0` exist! the tokens don't display correctly (they display as Y1-Y4) but you can still use them as lists
-        "L8", (short) 0x075d,
-        "L9", (short) 0x085d,
-        "L0", (short) 0x095d
+        "L6", (short) 0x055d
     );
     private final Word startWord = new Word((short) 0x0d); 
     private final Word dataLength;
@@ -88,35 +84,46 @@ public class DataHeader {
         // maybe refactor this switch statement?
         switch (type) {
             case "rlist", "clist" -> {
-                if (type.length() > 5) {
+                if (name.length() > 5) {
                     throw new IllegalArgumentException("Invalid list name, name must be equal to or fewer than 5 characters.");
                 }
+                varName[0] = (byte) 0x5d;
                 if (LIST_TOKENS.containsKey(name)) {
                     Word nameWord = new Word(LIST_TOKENS.get(name));
-                    varName[0] = nameWord.getLSB();
                     varName[1] = nameWord.getMSB();
+                } else if (name.matches("L0X[0-9A-F]{2}")) {
+                    varName[1] = Byte.parseByte(name.substring(3, 5), 16);
                 } else {
                     byte[] nameBytes = name.getBytes();
-                    for (int i = 0; i < nameBytes.length; ++i) {
+                    for (int i = 1; i < nameBytes.length; ++i) {
                         varName[i] = nameBytes[i];
                     }
                 }
             }
             case "string" -> {
-                if (!STRING_TOKENS.containsKey(name)) {
-                    throw new IllegalArgumentException("Invalid string name, only valid strings are `Str1` through `Str0`"); // maybe make users enter `1` instead of `Str1`?
+                if (name.matches("STR0X[0-9A-F]{2}")) {
+                    varName[0] = (byte) 0x5c;
+                    varName[1] = Byte.parseByte(name.substring(5, 7), 16);
+                } else if (STRING_TOKENS.containsKey(name)) {
+                    final Word nameWord = new Word(STRING_TOKENS.get(name));
+                    varName[0] = nameWord.getLSB();
+                    varName[1] = nameWord.getMSB();
+                } else {
+                    throw new IllegalArgumentException("Invalid string name. Valid strings are `Str1`-`Str0` or `Str0xNN`, where NN is a byte in hex.");
                 }
-                final Word nameWord = new Word(STRING_TOKENS.get(name));
-                varName[0] = nameWord.getLSB();
-                varName[1] = nameWord.getMSB();
             }
             case "matrix" -> {
-                if (!MATRIX_TOKENS.containsKey(name)) {
-                    throw new IllegalArgumentException("Invalid matrix name, only valid matrices are `[A]`-`[J]`.");
+                if (name.matches("\\[0X[0-9A-F]{2}\\]")) {
+                    varName[0] = (byte) 0xaa;
+                    varName[1] = Byte.parseByte(name.substring(3, 5), 16);
+                } else if (MATRIX_TOKENS.containsKey(name)) {
+                    final Word nameWord = new Word(MATRIX_TOKENS.get(name));
+                    varName[0] = nameWord.getLSB();
+                    varName[1] = nameWord.getMSB();
+                } else {
+                    throw new IllegalArgumentException("Invalid matrix name, only valid matrices are `[A]`-`[J]` or [0xNN], where NN is a byte in hex.");
                 }
-                final Word nameWord = new Word(MATRIX_TOKENS.get(name));
-                varName[0] = nameWord.getLSB();
-                varName[1] = nameWord.getMSB();
+                
             }
         }
     }
