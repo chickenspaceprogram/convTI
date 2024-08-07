@@ -1,24 +1,36 @@
 import java.nio.charset.StandardCharsets;
 
 public class FileHeader {
-    String eightSig = "**TI83F*";
-    byte[] threeSig = {0x1a, 0x0a, 0x00};
-    String comment = "Made by convTI, a TI calc file converter. ";
-    int arrayLen = 55; // headers are always the same length
-    byte[] headerArray = new byte[arrayLen];
+    private final String eightSig = "**TI83F*";
+    private final byte[] threeSig = {0x1a, 0x0a, 0x00};
+    private final String comment = "Made by convTI, a TI calc file converter. ";
+    private final int arrayLen = 55; // headers are always the same length
+    private final byte[] headerArray = new byte[arrayLen];
+    private final Word checksum;
 
-    byte[] eightSigBytes = eightSig.getBytes(StandardCharsets.US_ASCII);
-    byte[] commentBytes = comment.getBytes(StandardCharsets.US_ASCII);
+    private final byte[] eightSigBytes = eightSig.getBytes(StandardCharsets.US_ASCII);
+    private final byte[] commentBytes = comment.getBytes(StandardCharsets.US_ASCII);
 
-    public FileHeader(Word dataLength) {
+    public FileHeader(Word dataLength, byte[] data) {
         System.arraycopy(eightSigBytes, 0, headerArray, 0, 8);
         System.arraycopy(threeSig, 0, headerArray, 8, 3);
         System.arraycopy(commentBytes, 0, headerArray, 11, 42);
         headerArray[53] = dataLength.getLSB();
         headerArray[54] = dataLength.getMSB();
+        checksum = new Word(calculateChecksum(data));
     }
 
-    public Word checksum() {
-        return new Word((short) 1234); // this line only here so that the debugger stops yelling at me
+    public Word getChecksum() {
+        return checksum;
     }
+
+    private short calculateChecksum(byte[] data) {
+        short sum = 0;
+        for (byte currentByte : data) {
+            sum += (short) Byte.toUnsignedInt(currentByte);
+        }
+        return sum;
+    }
+
+
 }
