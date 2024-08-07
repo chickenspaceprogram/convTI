@@ -1,6 +1,6 @@
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Input {
@@ -13,7 +13,7 @@ public class Input {
         "--version", "-v",
         "--help", "-h"
     );
-    private final HashSet<String> FORMATS = new HashSet<>(Arrays.asList("rlist", "clist", "matrix", "string"));
+    private LinkedHashMap<String, String> allFormats = new LinkedHashMap<>();
     private String format;
     private String inputFilename;
     private String outputFilename;
@@ -21,7 +21,7 @@ public class Input {
 
     public void getInput(String[] arguments) throws IOException {
         // Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
-
+        addFormats();
         validateOptions(arguments);
         boolean isAnOption;
         if (numFileArgs < 3) {
@@ -52,9 +52,25 @@ public class Input {
         return outputFilename;
     }
 
+    private void addFormats() {
+        // there is absolutely a better way to do this, but stupid is easy
+        allFormats.put("prgm", "program");
+        allFormats.put("elprgm", "edit-locked program");
+        allFormats.put("rlist", "real list");
+        allFormats.put("clist", "complex list");
+        allFormats.put("matrix", "matrix");
+        allFormats.put("string", "string");
+        allFormats.put("rnum", "real number");
+        allFormats.put("cnum", "complex number");
+        allFormats.put("yvar", "y-variable");
+        allFormats.put("gdb", "GDB");
+        allFormats.put("pic", "Pic");
+        allFormats.put("tbl", "table settings");
+    }
+
     private void validateFormat() throws IOException {
-        if (!FORMATS.contains(format)) {
-            throw new IOException("Invalid format used. Valid formats are `rlist`, `clist`, `matrix`, `string`.");
+        if (!allFormats.containsKey(format)) {
+            throw new IOException("Invalid format entered. Enter `convti --help` to see a list of valid formats.");
         }
     }
 
@@ -86,7 +102,7 @@ public class Input {
 
     private void getReqdArgs(String arg) throws IOException {
         // this is probably a bad way to do this, but it's fiiiiiine
-        switch (this.numFileArgs) {
+        switch (numFileArgs) {
             case 0 -> {
                 ++numFileArgs;
                 inputFilename = arg;
@@ -112,7 +128,10 @@ public class Input {
         System.out.println("\noptions:");
         System.out.println("-h, --help\t\tprints this message and quits");
         System.out.println("-v. --version\t\tprints version and quits");
-        System.out.println("\nValid formats:\nrlist\t\t\treal list\nclist\t\t\tcomplex list\nmatrix\t\t\tmatrix\nstring\t\t\tstring"); // yes this is kinda a dumb way to do this
+        System.out.println("\nValid formats:");
+        for (String key : allFormats.keySet()) {
+            System.out.println(key + " : " + allFormats.get(key));
+        }
         System.exit(0);
     }
 
