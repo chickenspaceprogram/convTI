@@ -6,17 +6,15 @@ import java.util.Map;
 public class Input {
     // two maps are here since we want to ensure that if -f is entered that the user can't also enter --format and specify two different formats.
     private final Map<String, String> OPTIONS_SHORT = Map.of(
-        "-f", "--format",
         "-v", "--version",
         "-h", "--help"
     );
     private final Map<String, String> OPTIONS_LONG = Map.of(
-        "--format", "-f",
         "--version", "-v",
         "--help", "-h"
     );
     private final HashSet<String> FORMATS = new HashSet<>(Arrays.asList("rlist", "clist", "matrix", "string"));
-    private String formatAs;
+    private String format;
     private String inputFilename;
     private String outputFilename;
     private int numFileArgs = 0;
@@ -26,23 +24,37 @@ public class Input {
 
         validateOptions(arguments);
         boolean isAnOption;
-
-        for (int i = 0; i < arguments.length; ++i) {
-            isAnOption = OPTIONS_SHORT.containsKey(arguments[i]) || OPTIONS_LONG.containsKey(arguments[i]);
-            if (isAnOption) {
-                switch (arguments[i]) {
-                    case "-f", "--format" -> {
-                        ++i;
-                        catchFormattingError(arguments, i);
-                        formatAs = arguments[i];
-                    }
-                }
+        if (numFileArgs < 3) {
+            throw new IOException("convti: not enough arguments given; try --help if you need it");
+        }
+        for (String arg : arguments) {
+            isAnOption = OPTIONS_SHORT.containsKey(arg) || OPTIONS_LONG.containsKey(arg);
+            if (!isAnOption) {
+                getReqdArgs(arg);
             } else {
-                storeFilename(arguments[i]);
+                // replace this with actual option-handling code
+                System.out.println("Something's gone wrong.");
+                System.exit(-1);
             }
         }
-        if (numFileArgs < 2) {
-            throw new IOException("convti: not enough arguments given; try --help if you need it");
+        validateFormat();
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public String getInputFilename() {
+        return inputFilename;
+    }
+
+    public String getOutputFilename() {
+        return outputFilename;
+    }
+
+    private void validateFormat() throws IOException {
+        if (!FORMATS.contains(format)) {
+            throw new IOException("Invalid format used. Valid formats are `rlist`, `clist`, `matrix`, `string`.");
         }
     }
 
@@ -61,6 +73,7 @@ public class Input {
                 throw new IOException("convti: invalid optional argument given; enter `convti --help` to see a list of valid arguments.");
             }
             if (arg.contains("-")) {
+                // don't know why I did it like this but hey, it works!
                 optionsFound.add(arg);
                 if (arg.contains("--")) {
                     optionsFound.add(OPTIONS_LONG.get(arg));
@@ -69,61 +82,42 @@ public class Input {
                 }
             }
         }
-        if (arguments.length < 2) {
-            throw new IOException("convti: not enough arguments given; try --help if you need it");
-        }
     }
 
-    private void storeFilename(String filename) throws IOException {
+    private void getReqdArgs(String arg) throws IOException {
+        // this is probably a bad way to do this, but it's fiiiiiine
         switch (this.numFileArgs) {
             case 0 -> {
-                ++this.numFileArgs;
-                this.inputFilename = filename;
+                ++numFileArgs;
+                inputFilename = arg;
             }
             case 1 -> {
-                ++this.numFileArgs;
+                ++numFileArgs;
+                outputFilename = arg;
+            }
+            case 2 -> {
+                ++numFileArgs;
+                format = arg;
             }
             default -> {
-                throw new IOException("convti: too many files given");
+                throw new IOException("convti: too many arguments given");
             }
-        }
-    }
-
-    private void catchFormattingError(String[] allArguments, int position) throws IOException {
-        if (position >= allArguments.length) {
-            throw new IOException("convti: format specified, but no format given. "); // `no format given` is only thrown as an error when at the end, since `invalid format` will be thrown if at the beginning.
-        }
-        if (!FORMATS.contains(allArguments[position])) {
-            throw new IOException(String.format("convti: invalid format `%s` given. Did you forget to enter a format?", allArguments[position]));
         }
     }
 
     private void printHelp() {
-        System.out.println("usage: convti [<options>] <source> <filename>\n");
+        System.out.println("usage: convti [<options>] <source> <filename> <format>\n");
         System.out.println("<source>\t\tname of source file to compile");
         System.out.println("<filename>\t\tdesired filename on calculator");
         System.out.println("\noptions:");
         System.out.println("-h, --help\t\tprints this message and quits");
         System.out.println("-v. --version\t\tprints version and quits");
-        System.out.println("-f, --format [format]\tspecifies file format (if not provided, this will be inferred using filename and contents)");
         System.out.println("\nValid formats:\nrlist\t\t\treal list\nclist\t\t\tcomplex list\nmatrix\t\t\tmatrix\nstring\t\t\tstring"); // yes this is kinda a dumb way to do this
         System.exit(0);
     }
 
     private void printVersion() {
-        System.out.println("convti version 0.1.x (alpha)");
+        System.out.println("convti version 0.2.0-0.1 (alpha)");
         System.exit(0);
-    }
-
-    public String getFormat() {
-        return this.formatAs;
-    }
-
-    public String getInputFilename() {
-        return this.inputFilename;
-    }
-
-    public String getOutputFilename() {
-        return this.outputFilename;
     }
 }
