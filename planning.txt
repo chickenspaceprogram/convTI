@@ -15,7 +15,7 @@ v0.2.0-0.1 (current)
     - make sure --flags are properly unit tested!
 
 Future versions:
-v0.2.0-1
+v0.3.0
     - Add support for creating file headers of all the following types:
         - rnum - Real Number
         - yvar - Y-Variable
@@ -27,10 +27,10 @@ v0.2.0-1
         - tbl - Table setting (not implemented)
     - Support for gdb, pic, and tbl is not currently planned but may come if I decide to do it.
 
-v0.2.1
+v0.3.1
     - Write unit tests, ensure headers are bug-free (or at least bug-resistant)
 
-v0.3.x - conversion of prgm, yvar, str to .8x* files
+v0.4.x - conversion of prgm, yvar, str to .8x* files
     - this will force me to actually learn regex properly won't it ;-;
         - ` +(?=.*(?:"|$|->))(?!".*)` shooould match only spaces inside of quotes. might have to use \ to escape some chars in the regex but whatever
             - that leading space is important!
@@ -41,13 +41,13 @@ v0.3.x - conversion of prgm, yvar, str to .8x* files
                 - just type `0\x` or something to that effect to give you 0x
     - include the same character conversions as SourceCoder, makes life easy
 
-v0.4.x - conversion of rlist, clist, matrix, rnum, cnum to .8x* files
+v0.5.x - conversion of rlist, clist, matrix, rnum, cnum to .8x* files
     - update strings to have the --justtext flag, allowing them to be interpreted as plaintext instead of tokens
         - while you could just use token breaks, this is easier
 
-v0.5.x - decompilation of .8x* -> something human-readable
+v0.6.x - decompilation of .8x* -> something human-readable
     - probably somewhat easy? just a hashmap hashing token -> text
     - syntax should be something like `convti --decompile thing.8xp` or `convti -d thing.8xp`
 
-v0.6.x - make a VSCode extension to have something resembling a TI-BASIC idea
+v0.7.x - make a VSCode extension to have something resembling a TI-BASIC idea
     - no idea how to do this or if it's even feasible, but it would be cool!
