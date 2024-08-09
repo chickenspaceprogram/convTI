@@ -1,14 +1,13 @@
+import java.util.HashMap;
 import java.util.Map;
 
 public class DataHeader {
     // there is almost certainly a better way to deal with variable tokens & typeIDs, but this was easy
     // this class just generally is messy, but I don't really see how I could've made it *not* messy.
-    private final Map<String, Byte> TYPE_ID = Map.of(
-        "rlist", (byte) 0x01,
-        "clist", (byte) 0x0d,
-        "matrix", (byte) 0x02,
-        "string", (byte) 0x04
-    );
+    private final String[] typesArray = {"rnum", "rlist", "matrix", "yvar", "string", "prgm", "elprgm", "pic", "gdb", "cnum", "clist", "tbl"};
+
+    private HashMap<String, Byte> allTypeIDs;
+
     private final Map<String, Short> MATRIX_TOKENS = Map.of(
         "[A]", (short) 0x00aa,
         "[B]", (short) 0x01aa,
@@ -54,7 +53,8 @@ public class DataHeader {
     public DataHeader(String filename, String type, short dataLength, boolean isArchived) throws IllegalArgumentException {
 
         this.dataLength = new Word(dataLength);
-        typeID = TYPE_ID.get(type);
+        fillTypeIDs();
+        typeID = allTypeIDs.get(type);
         setVarName(filename, type);
         setArchivedStatus(isArchived);
         // 17 bytes is the size of the data section's header.
@@ -158,4 +158,21 @@ public class DataHeader {
         header[16] = dataLength.getMSB();
     }
     
+    private void fillTypeIDs() {
+        byte currentTypeID = 0x00;
+        for (String type : typesArray) {
+            allTypeIDs.put(type, currentTypeID);
+            switch (type) {
+                case "gdb" -> {
+                    currentTypeID = 0x0c;
+                }
+                case "tbl" -> {
+                    currentTypeID = 0x11;
+                }
+                default -> {
+                    ++currentTypeID;
+                }
+            }
+        }
+    }
 }
