@@ -10,12 +10,10 @@ v0.1.0
 
 v0.2.0-0
     - Format should no longer be an optional argument, force user to specify it
-v0.2.0-0.1 (current)
+v0.2.0-0.1
     - Add support for arbitrary --flags, necessary in future for things like --justtext and --decompile
-    - make sure --flags are properly unit tested!
 
-Future versions:
-v0.3.0
+v0.3.0 (current)
     - Add support for creating file headers of all the following types:
         - rnum - Real Number
         - yvar - Y-Variable
@@ -27,6 +25,7 @@ v0.3.0
         - tbl - Table setting (not implemented)
     - Support for gdb, pic, and tbl is not currently planned but may come if I decide to do it.
 
+Future versions:
 v0.3.1
     - Write unit tests, ensure headers are bug-free (or at least bug-resistant)
 
