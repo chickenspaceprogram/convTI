@@ -19,12 +19,12 @@ public class Input {
     private String outputFilename;
     private int numFileArgs = 0;
 
-    public void getInput(String[] arguments) throws IOException {
+    public Input(String[] arguments) throws IOException {
         // Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
         addFormats();
         validateOptions(arguments);
         boolean isAnOption;
-        if (numFileArgs < 3) {
+        if (arguments.length < 3) {
             throw new IOException("convti: not enough arguments given; try --help if you need it");
         }
         for (String arg : arguments) {
