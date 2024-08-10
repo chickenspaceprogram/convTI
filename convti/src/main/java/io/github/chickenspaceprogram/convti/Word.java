@@ -1,3 +1,4 @@
+package io.github.chickenspaceprogram.convti;
 public class Word {
     private byte MSB;
     private byte LSB;

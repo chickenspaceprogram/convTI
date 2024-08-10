@@ -1,3 +1,4 @@
+package io.github.chickenspaceprogram.convti;
 // these unit tests are done the stupid way for convenience!
 // I also don't reeeally know how to do proper unit tests, so yeah.
 import java.io.IOException;
