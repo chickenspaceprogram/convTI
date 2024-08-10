@@ -15,7 +15,7 @@ Apache Maven 3.6.2
 --------
 How to compile:
 
-Navigate to convTI/convti, and enter `mvn package` to compile this project to a .jar file.
+Navigate to the directory of this project in terminal, and enter `mvn package` to compile this project to a .jar file.
 You can then run the application by either directly running the .jar file or by using the included shell script.
 --------
 This application is still incomplete, as is its documentation.
