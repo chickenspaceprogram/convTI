@@ -5,3 +5,4 @@ Input.class
 convti.class
 UnitTests.class
 .DS_Store
+convti/target/
