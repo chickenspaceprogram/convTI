@@ -137,7 +137,7 @@ public class Input {
     }
 
     private void printVersion() {
-        System.out.println("convti version 0.2.0-0.1 (alpha)");
+        System.out.println("convti version 0.3.0 (alpha)");
         System.exit(0);
     }
 }

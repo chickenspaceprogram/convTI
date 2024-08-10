@@ -9,6 +9,14 @@ Dependencies:
 
 Java Development Kit (JDK)
  - version 22 was used to create this application, earlier or later versions will likely work as well
+Apache Maven 3.6.2
+ - older or newer versions probably would also work but you may or may not have to mess with pom.xml a bit.
+ - I am pretty new to Maven, if I've done something dumb here please raise an issue on GitHub!
+--------
+How to compile:
+
+Navigate to convTI/convti, and enter `mvn package` to compile this project to a .jar file.
+You can then run the application by either directly running the .jar file or by using the included shell script.
 --------
 This application is still incomplete, as is its documentation.
 Please raise an issue on GitHub if you encounter any issues or bugs! 
