@@ -3,31 +3,16 @@ convTI development planning/ideas
 This is as much for me to plan this project out as anything, feel free to ignore it. 
 Plans will change, nothing in here is a "promised feature" or anything.
 
-Past versions: 
-
-v0.1.0
-    - First version of Data & File headers mostly complete (needs future bugtesting and possible refactor)
-
-v0.2.0-0
-    - Format should no longer be an optional argument, force user to specify it
-v0.2.0-0.1
-    - Add support for arbitrary --flags, necessary in future for things like --justtext and --decompile
-
-v0.3.0 (current)
-    - Add support for creating file headers of all the following types:
-        - rnum - Real Number
-        - yvar - Y-Variable
-        - prgm - Program
-        - elprgm - Edit-locked program
-        - cnum - Complex Number
-        - gdb - GDB (not implemented)
-        - pic - Pic (not implemented)
-        - tbl - Table setting (not implemented)
-    - Support for gdb, pic, and tbl is not currently planned but may come if I decide to do it.
-
 Future versions:
-v0.3.1
-    - Write unit tests, ensure headers are bug-free (or at least bug-resistant)
+v0.3.1-a
+    - Write unit tests, ensure headers are bug-free (or at least bug-reduced)
+        - convti
+        - DataHeader
+        - FileHeader
+ √      - Input
+ √      - Word
+v0.3.1-b
+    - Make Input throw UserInputException instead of IOException
 
 v0.4.x - conversion of prgm, yvar, str to .8x* files
     - this will force me to actually learn regex properly won't it ;-;
