@@ -10,6 +10,9 @@ public class UnitTests {
         inputTests();
         try {
             Input yeet = new Input(args);
+            System.out.println(yeet.getFormat());
+            System.out.println(yeet.getInputFilename());
+            System.out.println(yeet.getOutputFilename());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
