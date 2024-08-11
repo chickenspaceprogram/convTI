@@ -1,6 +1,6 @@
 package io.github.chickenspaceprogram.convti;
 
-class Token {
+public class Token {
     /**
      * A class representing a token for the TI-8x series of calculators, including all its associated metadata.
      */
@@ -59,10 +59,16 @@ class Token {
     }
 
     public String getOSVersion() {
+        /**
+         * Returns the earliest OS version that supports this token.
+         */
         return osversion;
     }
 
     public boolean isTwoByte() {
+        /**
+         * Returns whether the token is two bytes long.
+         */
         return isShort;
     }
 }
