@@ -7,9 +7,6 @@ Note: need to figure out how tests work in maven.
 
 Future versions:
 
-v0.3.1-b
-    - Make Input throw UserInputException instead of IOException
-
 v0.4.x - conversion of prgm, yvar, str to .8x* files
     - this will force me to actually learn regex properly won't it ;-;
         - ` +(?=.*(?:"|$|->))(?!".*)` shooould match only spaces inside of quotes. might have to use \ to escape some chars in the regex but whatever
