@@ -3,14 +3,10 @@ convTI development planning/ideas
 This is as much for me to plan this project out as anything, feel free to ignore it. 
 Plans will change, nothing in here is a "promised feature" or anything.
 
+Note: need to figure out how tests work in maven.
+
 Future versions:
-v0.3.1-a
-    - Write unit tests, ensure headers are bug-free (or at least bug-reduced)
-        - convti
-        - DataHeader
-        - FileHeader
- √      - Input
- √      - Word
+
 v0.3.1-b
     - Make Input throw UserInputException instead of IOException
 

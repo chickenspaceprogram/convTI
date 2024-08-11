@@ -1,5 +1,4 @@
 package io.github.chickenspaceprogram.convti;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,13 +19,13 @@ public class Input {
     private String outputFilename;
     private int numFileArgs = 0;
 
-    public Input(String[] arguments) throws IOException {
+    public Input(String[] arguments) throws UserInputException {
         // Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
         addFormats();
         validateOptions(arguments);
         boolean isAnOption;
         if (arguments.length < 3) {
-            throw new IOException("convti: not enough arguments given; try --help if you need it");
+            throw new UserInputException("convti: not enough arguments given; try --help if you need it");
         }
         for (String arg : arguments) {
             isAnOption = OPTIONS_SHORT.containsKey(arg) || OPTIONS_LONG.containsKey(arg);
@@ -69,13 +68,13 @@ public class Input {
         allFormats.put("tbl", "table settings");
     }
 
-    private void validateFormat() throws IOException {
+    private void validateFormat() throws UserInputException {
         if (!allFormats.containsKey(format)) {
-            throw new IOException("Invalid format entered. Enter `convti --help` to see a list of valid formats.");
+            throw new UserInputException("Invalid format entered. Enter `convti --help` to see a list of valid formats.");
         }
     }
 
-    private void validateOptions(String[] arguments) throws IOException {
+    private void validateOptions(String[] arguments) throws UserInputException {
         HashSet<String> optionsFound = new HashSet<>();
         for (String arg : arguments) {
             switch (arg) {
@@ -83,11 +82,11 @@ public class Input {
                 case "-v", "--version" -> printVersion();
             }
             if (optionsFound.contains(arg)) {
-                throw new IOException("convti: optional argument was listed twice.");
+                throw new UserInputException("convti: optional argument was listed twice.");
             }
             boolean isInvalidOption = arg.contains("-") && !OPTIONS_SHORT.containsKey(arg) && !OPTIONS_LONG.containsKey(arg);
             if (isInvalidOption) {
-                throw new IOException("convti: invalid optional argument given; enter `convti --help` to see a list of valid arguments.");
+                throw new UserInputException("convti: invalid optional argument given; enter `convti --help` to see a list of valid arguments.");
             }
             if (arg.contains("-")) {
                 // don't know why I did it like this but hey, it works!
@@ -101,7 +100,7 @@ public class Input {
         }
     }
 
-    private void getReqdArgs(String arg) throws IOException {
+    private void getReqdArgs(String arg) throws UserInputException {
         // this is probably a bad way to do this, but it's fiiiiiine
         switch (numFileArgs) {
             case 0 -> {
@@ -117,7 +116,7 @@ public class Input {
                 format = arg;
             }
             default -> {
-                throw new IOException("convti: too many arguments given");
+                throw new UserInputException("convti: too many arguments given");
             }
         }
     }

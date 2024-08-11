@@ -1,12 +1,11 @@
 package io.github.chickenspaceprogram.convti;
-import java.io.IOException;
 
 public class convti {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws UserInputException {
         Input config;
         try {
             config = new Input(args);
-        } catch (IOException error) {
+        } catch (UserInputException error) {
             System.err.println(error.getMessage());
             throw error;
         }
