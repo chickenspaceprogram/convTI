@@ -10,37 +10,37 @@ public class DataHeader {
     private HashMap<String, Byte> allTypeIDs;
 
     private final Map<String, Short> MATRIX_TOKENS = Map.of(
-        "[A]", (short) 0x00aa,
-        "[B]", (short) 0x01aa,
-        "[C]", (short) 0x02aa,
-        "[D]", (short) 0x03aa,
-        "[E]", (short) 0x04aa,
-        "[F]", (short) 0x05aa,
-        "[G]", (short) 0x06aa,
-        "[H]", (short) 0x07aa,
-        "[I]", (short) 0x08aa,
-        "[J]", (short) 0x09aa
+        "[A]", (short) 0x00AA,
+        "[B]", (short) 0x01AA,
+        "[C]", (short) 0x02AA,
+        "[D]", (short) 0x03AA,
+        "[E]", (short) 0x04AA,
+        "[F]", (short) 0x05AA,
+        "[G]", (short) 0x06AA,
+        "[H]", (short) 0x07AA,
+        "[I]", (short) 0x08AA,
+        "[J]", (short) 0x09AA
     );
     private final Map<String, Short> STRING_TOKENS = Map.of(
-        "Str1", (short) 0x005c,
-        "Str2", (short) 0x015c,
-        "Str3", (short) 0x025c,
-        "Str4", (short) 0x035c,
-        "Str5", (short) 0x045c,
-        "Str6", (short) 0x055c,
-        "Str7", (short) 0x065c,
-        "Str8", (short) 0x075c,
-        "Str9", (short) 0x085c,
-        "Str0", (short) 0x095c
+        "Str1", (short) 0x005C,
+        "Str2", (short) 0x015C,
+        "Str3", (short) 0x025C,
+        "Str4", (short) 0x035C,
+        "Str5", (short) 0x045C,
+        "Str6", (short) 0x055C,
+        "Str7", (short) 0x065C,
+        "Str8", (short) 0x075C,
+        "Str9", (short) 0x085C,
+        "Str0", (short) 0x095C
     );
     // currently implicitly assuming that if the user enters `L1` or `l1` they want to use the inbuilt L1 token, may add flag for this behavior in future
     private final Map<String, Short> LIST_TOKENS = Map.of(
-        "L1", (short) 0x005d,
-        "L2", (short) 0x015d,
-        "L3", (short) 0x025d,
-        "L4", (short) 0x035d,
-        "L5", (short) 0x045d,
-        "L6", (short) 0x055d
+        "L1", (short) 0x005D,
+        "L2", (short) 0x015D,
+        "L3", (short) 0x025D,
+        "L4", (short) 0x035D,
+        "L5", (short) 0x045D,
+        "L6", (short) 0x055D
     );
     private final Word startWord = new Word((short) 0x0d); 
     private final Word dataLength;
@@ -59,7 +59,7 @@ public class DataHeader {
         setVarName(filename, type);
         setArchivedStatus(isArchived);
         // 17 bytes is the size of the data section's header.
-        if ((dataLength & 0xffff) + 17 > 65535) {
+        if ((dataLength & 0xFFFF) + 17 > 65535) {
             throw new IllegalArgumentException("Data section of variable too large, encountered overflow.");
         }
         dataSectionLength = (short) (dataLength + 17);
@@ -88,11 +88,11 @@ public class DataHeader {
                 if (name.length() > 5) {
                     throw new IllegalArgumentException("Invalid list name, name must be equal to or fewer than 5 characters.");
                 }
-                varName[0] = (byte) 0x5d;
+                varName[0] = (byte) 0x5D;
                 if (LIST_TOKENS.containsKey(name)) {
                     Word nameWord = new Word(LIST_TOKENS.get(name));
                     varName[1] = nameWord.getMSB();
-                } else if (name.matches("L0X[0-9A-F]{2}")) {
+                } else if (name.matches("L[0-9A-F]{2}")) {
                     varName[1] = Byte.parseByte(name.substring(3, 5), 16);
                 } else {
                     byte[] nameBytes = name.getBytes();
@@ -102,8 +102,8 @@ public class DataHeader {
                 }
             }
             case "string" -> {
-                if (name.matches("STR0X[0-9A-F]{2}")) {
-                    varName[0] = (byte) 0x5c;
+                if (name.matches("STR[0-9A-F]{2}")) {
+                    varName[0] = (byte) 0x5C;
                     varName[1] = Byte.parseByte(name.substring(5, 7), 16);
                 } else if (STRING_TOKENS.containsKey(name)) {
                     final Word nameWord = new Word(STRING_TOKENS.get(name));
@@ -114,8 +114,8 @@ public class DataHeader {
                 }
             }
             case "matrix" -> {
-                if (name.matches("\\[0X[0-9A-F]{2}\\]")) {
-                    varName[0] = (byte) 0xaa;
+                if (name.matches("\\[[0-9A-F]{2}\\]")) {
+                    varName[0] = (byte) 0xAA;
                     varName[1] = Byte.parseByte(name.substring(3, 5), 16);
                 } else if (MATRIX_TOKENS.containsKey(name)) {
                     final Word nameWord = new Word(MATRIX_TOKENS.get(name));
@@ -165,7 +165,7 @@ public class DataHeader {
             allTypeIDs.put(type, currentTypeID);
             switch (type) {
                 case "gdb" -> {
-                    currentTypeID = 0x0c;
+                    currentTypeID = 0x0C;
                 }
                 case "tbl" -> {
                     currentTypeID = 0x11;

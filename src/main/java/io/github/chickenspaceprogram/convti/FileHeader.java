@@ -3,7 +3,7 @@ import java.nio.charset.StandardCharsets;
 
 public class FileHeader {
     private final String eightSig = "**TI83F*";
-    private final byte[] threeSig = {0x1a, 0x0a, 0x00};
+    private final byte[] threeSig = {0x1A, 0x0A, 0x00};
     private final String comment = "Made by convTI, a TI calc file converter. ";
     private final int arrayLen = 55; // headers are always the same length
     private final byte[] headerArray = new byte[arrayLen];
