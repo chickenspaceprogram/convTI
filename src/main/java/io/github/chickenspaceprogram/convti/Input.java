@@ -4,6 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Input {
+    /**
+     * Processes user input from the command line.
+     */
     // two maps are here since we want to ensure that if -f is entered that the user can't also enter --format and specify two different formats.
     private final Map<String, String> OPTIONS_SHORT = Map.of(
         "-v", "--version",
@@ -20,7 +23,10 @@ public class Input {
     private int numFileArgs = 0;
 
     public Input(String[] arguments) throws UserInputException {
-        // Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
+        /**
+         * Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
+         * @param   arguments   arguments from the command line 
+         */
         addFormats();
         validateOptions(arguments);
         boolean isAnOption;
@@ -41,18 +47,31 @@ public class Input {
     }
 
     public String getFormat() {
+        /**
+         * Returns the type, or format, of the variable, as stored on the calculator.
+         */
         return format;
     }
 
     public String getInputFilename() {
+        /**
+         * Returns the filename at which the input data is located.
+         */
         return inputFilename;
     }
 
     public String getOutputFilename() {
+        /**
+         * Returns the name of the file as it would be on the user's calculator.
+         * Note that as of v0.3.1-b this filename may be invalid, make sure to check it before tokenizing!
+         */
         return outputFilename;
     }
 
     private void addFormats() {
+        /**
+         * Creates allFormats, which maps the format types to short descriptions about them.
+         */
         // there is absolutely a better way to do this, but stupid is easy
         allFormats.put("prgm", "program");
         allFormats.put("elprgm", "edit-locked program");
@@ -69,12 +88,19 @@ public class Input {
     }
 
     private void validateFormat() throws UserInputException {
+        /**
+         * Ensures that the format the user entered is valid.
+         * Throws UserInputException if the format is not valid.
+         */
         if (!allFormats.containsKey(format)) {
             throw new UserInputException("Invalid format entered. Enter `convti --help` to see a list of valid formats.");
         }
     }
 
     private void validateOptions(String[] arguments) throws UserInputException {
+        /**
+         * Ensures that the arguments the user entered are formatted correctly, and handles optional arguments.
+         */
         HashSet<String> optionsFound = new HashSet<>();
         for (String arg : arguments) {
             switch (arg) {
@@ -101,7 +127,9 @@ public class Input {
     }
 
     private void getReqdArgs(String arg) throws UserInputException {
-        // this is probably a bad way to do this, but it's fiiiiiine
+        /**
+         * Saves each required argument to the appropriate variable and ensures that the correct number of required arguments are given.
+         */
         switch (numFileArgs) {
             case 0 -> {
                 ++numFileArgs;
@@ -122,6 +150,9 @@ public class Input {
     }
 
     private void printHelp() {
+        /**
+         * Prints help and exits.
+         */
         System.out.println("usage: convti [<options>] <source> <filename> <format>\n");
         System.out.println("<source>\t\tname of source file to compile");
         System.out.println("<filename>\t\tdesired filename on calculator");
@@ -136,6 +167,9 @@ public class Input {
     }
 
     private void printVersion() {
+        /**
+         * Prints version and exits.
+         */
         System.out.println("convti version 0.3.0 (alpha)");
         System.exit(0);
     }
