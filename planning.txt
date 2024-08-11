@@ -13,9 +13,7 @@ v0.4.x - conversion of prgm, yvar, str to .8x* files
             - that leading space is important!
             - can't guarantee this is the fastest way to do this but it's the lazy way!
     - include some sort of syntax for list, string, & matrix tokens beyond L1-L6, Str1-Str0, & [A]-[J]
-        - maybe L0xnn, Str0xnn, [0xnn] where nn is a byte in hex. No idea how hard this would be to implement tbh.
-            - `0x` here basically functions as an escape character. It's used because it emphasizes to the user that they're entering a hex value.
-                - just type `0\x` or something to that effect to give you 0x
+        - maybe Lnn, Strnn, [nn] where nn is a byte in hex. No idea how hard this would be to implement tbh.
     - include the same character conversions as SourceCoder, makes life easy
 
 v0.5.x - conversion of rlist, clist, matrix, rnum, cnum to .8x* files
