@@ -34,3 +34,6 @@ merthsoft, "Link Protocol Guide v1.4"
 KermMartian, "SourceCoder 3"
     - https://sc.cemetech.net
     - inspired this project
+TI Toolkit Token Sheets:
+    - https://github.com/TI-Toolkit/tokens
+    - Made me not have to manually find the hex codes for each token.

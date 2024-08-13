@@ -9,9 +9,8 @@ Future versions:
 
 v0.4.x - conversion of prgm, yvar, str to .8x* files
     - this will force me to actually learn regex properly won't it ;-;
-        - ` +(?=.*(?:"|$|->))(?!".*)` shooould match only spaces inside of quotes. might have to use \ to escape some chars in the regex but whatever
-            - that leading space is important!
-            - can't guarantee this is the fastest way to do this but it's the lazy way!
+        - `\"(.*?)(?:\"|$|->)` matches all quoted stuff into groups
+        - then use `( )` to find spaces in those groups
     - include some sort of syntax for list, string, & matrix tokens beyond L1-L6, Str1-Str0, & [A]-[J]
         - maybe Lnn, Strnn, [nn] where nn is a byte in hex. No idea how hard this would be to implement tbh.
     - include the same character conversions as SourceCoder, makes life easy
