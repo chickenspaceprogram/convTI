@@ -8,8 +8,7 @@
   <version>0.3.0</version>
 
   <name>convti</name>
-  <!-- FIXME change it to the project's website -->
-  <url>chickenspaceprogram.github.io</url>
+  <url>https://github.com/chickenspaceprogram/convTI</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
