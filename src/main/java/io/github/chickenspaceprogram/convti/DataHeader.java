@@ -3,6 +3,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataHeader {
+    /**
+     * Creates the header for a specific variable entry.
+     */
     // there is almost certainly a better way to deal with variable tokens & typeIDs, but this was easy
     // this class just generally is messy, but I don't really see how I could've made it *not* messy.
     private final String[] typesArray = {"rnum", "rlist", "matrix", "yvar", "string", "prgm", "elprgm", "pic", "gdb", "cnum", "clist", "tbl"};
@@ -52,7 +55,9 @@ public class DataHeader {
     private final short dataSectionLength;
 
     public DataHeader(String filename, String type, short dataLength, boolean isArchived) throws IllegalArgumentException {
-
+        /**
+         * Creates the header for a variable entry and checks for errors.
+         */
         this.dataLength = new Word(dataLength);
         fillTypeIDs();
         typeID = allTypeIDs.get(type);
@@ -67,14 +72,25 @@ public class DataHeader {
     }
 
     public short getDataSectionLength() {
+        /**
+         * Returns the length of the entire variable section, including the variable header.
+         */
         return dataSectionLength;
     }
 
     public byte[] getDataHeader() {
+        /**
+         * Returns the variable header.
+         */
         return header;
     }
 
     private void setVarName(String name, String type) throws IllegalArgumentException{
+        /**
+         * Checks whether the variable's name is valid.
+         * If the name is valid, it is stored to varName in the proper format.
+         * If the name is invalid, an IllegalArgumentException is thrown.
+         */
         name = name.toUpperCase();
         if (!name.matches("^[A-Z0-9\\[\\]]*$")) {
             throw new IllegalArgumentException("Invalid variable name, name contained illegal (nonalphanumeric) characters.");
@@ -110,7 +126,7 @@ public class DataHeader {
                     varName[0] = nameWord.getLSB();
                     varName[1] = nameWord.getMSB();
                 } else {
-                    throw new IllegalArgumentException("Invalid string name. Valid strings are `Str1`-`Str0` or `Str0xNN`, where NN is a byte in hex.");
+                    throw new IllegalArgumentException("Invalid string name. Valid strings are `Str1`-`Str0` or `StrNN`, where NN is a byte in hexadecimal.");
                 }
             }
             case "matrix" -> {
@@ -122,7 +138,7 @@ public class DataHeader {
                     varName[0] = nameWord.getLSB();
                     varName[1] = nameWord.getMSB();
                 } else {
-                    throw new IllegalArgumentException("Invalid matrix name, only valid matrices are `[A]`-`[J]` or [0xNN], where NN is a byte in hex.");
+                    throw new IllegalArgumentException("Invalid matrix name, only valid matrices are `[A]`-`[J]` or [NN], where NN is a byte in hexadecimal.");
                 }
                 
             }
@@ -130,6 +146,9 @@ public class DataHeader {
     }
 
     private void setArchivedStatus(boolean isArchived) {
+        /**
+         * Sets the bytes that tell the calculator whether the variable is to be archived.
+         */
         if (isArchived) {
             archivedStatus = (byte) 0x80;
         } else {
@@ -138,6 +157,9 @@ public class DataHeader {
     }
 
     private void fillHeader() {
+        /**
+         * Puts all the separate parts of the header into an array of bytes.
+         */
         // this code is dumb, but hey, it works.
         header[0] = startWord.getLSB();
         header[1] = startWord.getMSB();
@@ -160,6 +182,9 @@ public class DataHeader {
     }
     
     private void fillTypeIDs() {
+        /**
+         * Creates a HashMap mapping variable types to their corresponding TypeIDs.
+         */
         byte currentTypeID = 0x00;
         for (String type : typesArray) {
             allTypeIDs.put(type, currentTypeID);

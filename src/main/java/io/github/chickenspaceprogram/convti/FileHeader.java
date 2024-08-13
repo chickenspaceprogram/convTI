@@ -2,6 +2,9 @@ package io.github.chickenspaceprogram.convti;
 import java.nio.charset.StandardCharsets;
 
 public class FileHeader {
+    /**
+     * Creates the header for the file to be sent to the calculator.
+     */
     private final String eightSig = "**TI83F*";
     private final byte[] threeSig = {0x1A, 0x0A, 0x00};
     private final String comment = "Made by convTI, a TI calc file converter. ";
@@ -13,6 +16,9 @@ public class FileHeader {
     private final byte[] commentBytes = comment.getBytes(StandardCharsets.US_ASCII);
 
     public FileHeader(Word dataLength, byte[] data) {
+        /**
+         * Creates the header for the file to be sent to the calculator, as well as the file's checksum.
+         */
         System.arraycopy(eightSigBytes, 0, headerArray, 0, 8);
         System.arraycopy(threeSig, 0, headerArray, 8, 3);
         System.arraycopy(commentBytes, 0, headerArray, 11, 42);
@@ -22,10 +28,23 @@ public class FileHeader {
     }
 
     public Word getChecksum() {
+        /**
+         * Returns the file's checksum.
+         */
         return checksum;
     }
 
+    public byte[] getHeader() {
+        /**
+         * Returns the bytes of the file's header.
+         */
+        return headerArray;
+    }
+
     private short calculateChecksum(byte[] data) {
+        /**
+         * Calculates the file's checksum.
+         */
         short sum = 0;
         for (byte currentByte : data) {
             sum += (short) Byte.toUnsignedInt(currentByte);
