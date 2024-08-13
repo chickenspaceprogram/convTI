@@ -3,7 +3,7 @@ convTI
 --------
 A command line utility for converting .txt and .csv files into the format used by certain Texas Instruments calculators.
 --------
-Version 0.3.x (alpha)
+Version 0.4.x (alpha)
 
 This project is still in alpha, and is *very* incomplete.
 Feel free to contribute issues and pull requests!
