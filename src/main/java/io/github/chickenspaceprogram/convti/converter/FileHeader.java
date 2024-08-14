@@ -1,4 +1,4 @@
-package io.github.chickenspaceprogram.convti;
+package io.github.chickenspaceprogram.convti.converter;
 import java.nio.charset.StandardCharsets;
 
 public class FileHeader {

@@ -1,4 +1,4 @@
-package io.github.chickenspaceprogram.convti;
+package io.github.chickenspaceprogram.convti.io;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;

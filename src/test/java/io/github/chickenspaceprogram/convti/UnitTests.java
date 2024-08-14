@@ -1,6 +1,11 @@
 package io.github.chickenspaceprogram.convti;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import io.github.chickenspaceprogram.convti.io.Input;
+import io.github.chickenspaceprogram.convti.io.UserInputException;
+import io.github.chickenspaceprogram.convti.converter.Word;
+
+
 
 import org.junit.Test;
 

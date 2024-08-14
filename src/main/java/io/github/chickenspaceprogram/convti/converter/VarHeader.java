@@ -1,8 +1,8 @@
-package io.github.chickenspaceprogram.convti;
+package io.github.chickenspaceprogram.convti.converter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataHeader {
+public class VarHeader {
     /**
      * Creates the header for a specific variable entry.
      */

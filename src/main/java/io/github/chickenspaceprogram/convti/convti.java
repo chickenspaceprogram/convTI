@@ -1,4 +1,7 @@
 package io.github.chickenspaceprogram.convti;
+import io.github.chickenspaceprogram.convti.io.Input;
+import io.github.chickenspaceprogram.convti.io.Output;
+import io.github.chickenspaceprogram.convti.io.UserInputException;
 
 public class convti {
     public static void main(String[] args) throws UserInputException {
@@ -9,6 +12,7 @@ public class convti {
             System.err.println(error.getMessage());
             throw error;
         }
+        Output myootput = new Output();
         System.out.println(config.getFormat());
         System.out.println(config.getInputFilename());
         System.out.println(config.getOutputFilename());

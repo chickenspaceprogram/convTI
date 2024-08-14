@@ -1,6 +1,6 @@
-package io.github.chickenspaceprogram.convti;
+package io.github.chickenspaceprogram.convti.io;
 
-class UserInputException extends Exception {
+public class UserInputException extends Exception {
     /**
      * Constructs a class of exception to be thrown when the user has entered or formatted their input incorrectly.
      */
