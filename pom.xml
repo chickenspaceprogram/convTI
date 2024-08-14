@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.chickenspaceprogram.convti</groupId>
   <artifactId>convti</artifactId>
-  <version>0.3.0</version>
+  <version>1.0.0</version>
 
   <name>convti</name>
   <url>https://github.com/chickenspaceprogram/convTI</url>
@@ -77,4 +77,13 @@
       </plugins>
     </pluginManagement>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.8.0</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

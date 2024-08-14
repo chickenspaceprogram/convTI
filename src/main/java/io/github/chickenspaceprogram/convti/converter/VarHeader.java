@@ -2,10 +2,10 @@ package io.github.chickenspaceprogram.convti.converter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Creates the header for a specific variable entry.
+ */
 public class VarHeader {
-    /**
-     * Creates the header for a specific variable entry.
-     */
     // there is almost certainly a better way to deal with variable tokens & typeIDs, but this was easy
     // this class just generally is messy, but I don't really see how I could've made it *not* messy.
     private final String[] typesArray = {"rnum", "rlist", "matrix", "yvar", "string", "prgm", "elprgm", "pic", "gdb", "cnum", "clist", "tbl"};
@@ -54,10 +54,10 @@ public class VarHeader {
     private final byte[] header = new byte[17];
     private final short dataSectionLength;
 
-    public DataHeader(String filename, String type, short dataLength, boolean isArchived) throws IllegalArgumentException {
-        /**
-         * Creates the header for a variable entry and checks for errors.
-         */
+    /**
+     * Creates the header for a variable entry and checks for errors.
+     */
+    public VarHeader(String filename, String type, short dataLength, boolean isArchived) throws IllegalArgumentException {
         this.dataLength = new Word(dataLength);
         fillTypeIDs();
         typeID = allTypeIDs.get(type);
@@ -71,26 +71,26 @@ public class VarHeader {
         fillHeader();
     }
 
+    /**
+     * Returns the length of the entire variable section, including the variable header.
+     */
     public short getDataSectionLength() {
-        /**
-         * Returns the length of the entire variable section, including the variable header.
-         */
         return dataSectionLength;
     }
 
+    /**
+     * Returns the variable header.
+     */
     public byte[] getDataHeader() {
-        /**
-         * Returns the variable header.
-         */
         return header;
     }
 
+    /**
+     * Checks whether the variable's name is valid.<br>
+     * If the name is valid, it is stored to varName in the proper format.<br>
+     * If the name is invalid, an IllegalArgumentException is thrown.
+     */
     private void setVarName(String name, String type) throws IllegalArgumentException{
-        /**
-         * Checks whether the variable's name is valid.
-         * If the name is valid, it is stored to varName in the proper format.
-         * If the name is invalid, an IllegalArgumentException is thrown.
-         */
         name = name.toUpperCase();
         if (!name.matches("^[A-Z0-9\\[\\]]*$")) {
             throw new IllegalArgumentException("Invalid variable name, name contained illegal (nonalphanumeric) characters.");
@@ -145,10 +145,10 @@ public class VarHeader {
         }
     }
 
+    /**
+     * Sets the bytes that tell the calculator whether the variable is to be archived.
+     */
     private void setArchivedStatus(boolean isArchived) {
-        /**
-         * Sets the bytes that tell the calculator whether the variable is to be archived.
-         */
         if (isArchived) {
             archivedStatus = (byte) 0x80;
         } else {
@@ -156,10 +156,10 @@ public class VarHeader {
         }
     }
 
+    /**
+     * Puts all the separate parts of the header into an array of bytes.
+     */
     private void fillHeader() {
-        /**
-         * Puts all the separate parts of the header into an array of bytes.
-         */
         // this code is dumb, but hey, it works.
         header[0] = startWord.getLSB();
         header[1] = startWord.getMSB();
@@ -181,10 +181,10 @@ public class VarHeader {
         header[16] = dataLength.getMSB();
     }
     
+    /**
+     * Creates a HashMap mapping variable types to their corresponding TypeIDs.
+     */
     private void fillTypeIDs() {
-        /**
-         * Creates a HashMap mapping variable types to their corresponding TypeIDs.
-         */
         byte currentTypeID = 0x00;
         for (String type : typesArray) {
             allTypeIDs.put(type, currentTypeID);
