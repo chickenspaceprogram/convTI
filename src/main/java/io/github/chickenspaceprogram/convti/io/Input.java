@@ -24,7 +24,7 @@ public class Input {
 
     /**
      * Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
-     * @param   arguments   arguments from the command line 
+     * @param   arguments   arguments straight from the command line 
      */
     public Input(String[] arguments) throws UserInputException {
         addFormats();
@@ -47,7 +47,8 @@ public class Input {
     }
 
     /**
-     * Returns the type, or format, of the variable, as stored on the calculator.
+     * Returns the user's desired variable format.
+     * @return variable format the user inputted
      */
     public String getFormat() {
         return format;

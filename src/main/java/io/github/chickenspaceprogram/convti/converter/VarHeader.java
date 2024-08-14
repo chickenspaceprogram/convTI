@@ -52,10 +52,13 @@ public class VarHeader {
     private final byte version = (byte) 0x00;
     private byte archivedStatus; // making this final gave errors, idk why
     private final byte[] header = new byte[17];
-    private final short dataSectionLength;
+    private final short varLength;
 
     /**
      * Creates the header for a variable entry and checks for errors.
+     * @param filename the intended name of the variable on a calculator
+     * @param type the format of the variable; what type it will be on a calculator
+     * @param dataLength the length of the data section, inc
      */
     public VarHeader(String filename, String type, short dataLength, boolean isArchived) throws IllegalArgumentException {
         this.dataLength = new Word(dataLength);
@@ -67,19 +70,21 @@ public class VarHeader {
         if ((dataLength & 0xFFFF) + 17 > 65535) {
             throw new IllegalArgumentException("Data section of variable too large, encountered overflow.");
         }
-        dataSectionLength = (short) (dataLength + 17);
+        varLength = (short) (dataLength + 17);
         fillHeader();
     }
 
     /**
-     * Returns the length of the entire variable section, including the variable header.
+     * Returns the length of the variable section, including both the header and the variable data.
+     * @return the length of the variable section
      */
-    public short getDataSectionLength() {
-        return dataSectionLength;
+    public short getVarLength() {
+        return (short) (dataLength.getWordValue() + 17);
     }
 
     /**
      * Returns the variable header.
+     * @return the variable header
      */
     public byte[] getDataHeader() {
         return header;
@@ -89,6 +94,8 @@ public class VarHeader {
      * Checks whether the variable's name is valid.<br>
      * If the name is valid, it is stored to varName in the proper format.<br>
      * If the name is invalid, an IllegalArgumentException is thrown.
+     * @param name the name of the variable
+     * @param type the type/format of the variable
      */
     private void setVarName(String name, String type) throws IllegalArgumentException{
         name = name.toUpperCase();
@@ -147,6 +154,7 @@ public class VarHeader {
 
     /**
      * Sets the bytes that tell the calculator whether the variable is to be archived.
+     * @param isArchived whether the variable is archived
      */
     private void setArchivedStatus(boolean isArchived) {
         if (isArchived) {
