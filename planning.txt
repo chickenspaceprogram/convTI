@@ -12,7 +12,7 @@ v1.0.x - conversion of prgm, yvar, str to .8x* files
         - `\"(.*?)(?:\"|$|->)` matches all quoted stuff into groups
         - then use `( )` to find spaces in those groups
     - include some sort of syntax for list, string, & matrix tokens beyond L1-L6, Str1-Str0, & [A]-[J]
-        - maybe Lnn, Strnn, [nn] where nn is a byte in hex. No idea how hard this would be to implement tbh.
+        - maybe Lxnn, Strxnn, [xnn] where nn is a byte in hex. No idea how hard this would be to implement tbh.
     - include the same character conversions as SourceCoder, makes life easy
 
 v1.1.x - conversion of rlist, clist, matrix, rnum, cnum to .8x* files
