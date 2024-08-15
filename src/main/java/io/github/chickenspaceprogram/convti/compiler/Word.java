@@ -1,4 +1,4 @@
-package io.github.chickenspaceprogram.convti.converter;
+package io.github.chickenspaceprogram.convti.compiler;
 
 /**
  * A class that separates a short into its most and least significant bytes and provides a way to access those bytes.

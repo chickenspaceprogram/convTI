@@ -1,4 +1,4 @@
-package io.github.chickenspaceprogram.convti.converter;
+package io.github.chickenspaceprogram.convti.compiler;
 import java.util.HashMap;
 import java.util.Map;
 

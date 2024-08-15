@@ -1,4 +1,4 @@
-package io.github.chickenspaceprogram.convti.converter;
+package io.github.chickenspaceprogram.convti.compiler;
 
 /**
  * A class representing a token for the TI-8x series of calculators, including all its associated metadata.

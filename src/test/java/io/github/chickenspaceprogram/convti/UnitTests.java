@@ -1,7 +1,7 @@
 package io.github.chickenspaceprogram.convti;
 import org.junit.Test;
 
-import io.github.chickenspaceprogram.convti.converter.Word;
+import io.github.chickenspaceprogram.convti.compiler.Word;
 import io.github.chickenspaceprogram.convti.io.Input;
 import io.github.chickenspaceprogram.convti.io.UserInputException;
 

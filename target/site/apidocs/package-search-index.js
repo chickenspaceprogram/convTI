@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.github.chickenspaceprogram.convti"},{"l":"io.github.chickenspaceprogram.convti.converter"},{"l":"io.github.chickenspaceprogram.convti.io"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.github.chickenspaceprogram.convti"},{"l":"io.github.chickenspaceprogram.convti.compiler"},{"l":"io.github.chickenspaceprogram.convti.io"}];updateSearchResults();
