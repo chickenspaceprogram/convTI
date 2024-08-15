@@ -3,7 +3,7 @@ convTI development planning/ideas
 This is as much for me to plan this project out as anything, feel free to ignore it. 
 Plans will change, nothing in here is a "promised feature" or anything.
 
-Note: need to figure out how tests work in maven.
+Unit tests also currently suck, but they will be made better in future.
 
 Future versions:
 

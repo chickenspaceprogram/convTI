@@ -1,5 +1,9 @@
 package io.github.chickenspaceprogram.convti;
+import java.io.IOException;
+
 import org.junit.Test;
+
+import com.opencsv.exceptions.CsvException;
 
 import io.github.chickenspaceprogram.convti.compiler.Word;
 import io.github.chickenspaceprogram.convti.io.Input;
@@ -10,10 +14,11 @@ import io.github.chickenspaceprogram.convti.io.UserInputException;
 
 public class UnitTests {
     @Test
-    public void allTests() {
+    public void allTests() throws IOException, CsvException, UserInputException {
         // put whatever you wanna test here
         wordTests();
         inputTests();
+        TestLoadCSV yeet = new TestLoadCSV();
     }
     private static void wordTests() {
         // Rollover happens with bytes > 0x80, make note of this!
