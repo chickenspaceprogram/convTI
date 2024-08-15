@@ -3,7 +3,7 @@ convTI
 --------
 A command line utility for converting .txt and .csv files into the format used by certain Texas Instruments calculators.
 --------
-Version 0.4.x (alpha)
+Version 1.0 (alpha)
 
 This project is still in alpha, and is *very* incomplete.
 Feel free to contribute issues and pull requests!
@@ -13,8 +13,8 @@ If you want an *actually good* version of this, check out SourceCoder 3 or Token
 Dependencies:
 
 Java Development Kit (JDK)
- - version 22 was used to create this application, earlier or later versions will likely work as well
-Apache Maven 3.6.2
+ - version 21 was used to create this application, earlier or later versions will likely work as well
+Apache Maven 3.9.8
  - older or newer versions probably would also work but you may or may not have to mess with pom.xml a bit.
  - I am pretty new to Maven, if I've done something dumb here please raise an issue on GitHub!
 --------
