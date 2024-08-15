@@ -24,7 +24,8 @@ public class Input {
 
     /**
      * Takes user's input from command line and stores the relevant parts to formatAs, inputFilename, and outputFilename
-     * @param   arguments   arguments straight from the command line 
+     * @param arguments arguments straight from the command line 
+     * @throws UserInputException when the user's input is invalid
      */
     public Input(String[] arguments) throws UserInputException {
         addFormats();
@@ -56,6 +57,7 @@ public class Input {
 
     /**
      * Returns the filename at which the input data is located.
+     * @return input filename
      */
     public String getInputFilename() {
         return inputFilename;
@@ -64,6 +66,7 @@ public class Input {
     /**
      * Returns the name of the file to which the output data should be saved.<br>
      * Note that as of v0.3.1-b this filename may be invalid, make sure to check it before tokenizing!
+     * @return output filename
      */
     public String getOutputFilename() {
         return outputFilename;

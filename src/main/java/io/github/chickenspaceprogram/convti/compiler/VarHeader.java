@@ -59,6 +59,7 @@ public class VarHeader {
      * @param filename the intended name of the variable on a calculator
      * @param type the format of the variable; what type it will be on a calculator
      * @param dataLength the length of the data section, inc
+     * @param isArchived whether the variable should be sent to Archive
      */
     public VarHeader(String filename, String type, short dataLength, boolean isArchived) throws IllegalArgumentException {
         this.dataLength = new Word(dataLength);
