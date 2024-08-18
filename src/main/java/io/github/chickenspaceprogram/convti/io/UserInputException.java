@@ -6,7 +6,7 @@ import java.io.IOException;
  */
 public class UserInputException extends IOException {
     /**
-     * Constructs a new UserInputException with no cause or detail message.
+     * Constructs a new UserInputException with no detail message.
      */
     public UserInputException() {}
 
@@ -17,24 +17,5 @@ public class UserInputException extends IOException {
      */
     public UserInputException(String message) {
         super(message);
-    }
-
-    /**
-     * Constructs a new UserInputException with a detail message and a cause.
-     *
-     * @param message the detail message
-     * @param cause the cause
-     */
-    public UserInputException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * Constructs a new UserInputException with a cause.
-     *
-     * @param cause the cause
-     */
-    public UserInputException(Throwable cause) {
-        super(cause);
     }
 }
