@@ -14,7 +14,7 @@ Dependencies:
 
 Java Development Kit (JDK)
  - version 21 was used to create this application, earlier or later versions will likely work as well
-Apache Maven 3.9.8
+Apache Maven 3.9.9
  - older or newer versions probably would also work but you may or may not have to mess with pom.xml a bit.
  - I am pretty new to Maven, if I've done something dumb here please raise an issue on GitHub!
 --------
